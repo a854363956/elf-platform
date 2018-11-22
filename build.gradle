@@ -15,7 +15,6 @@ plugins {
     id 'nu.studer.jooq' version '3.0.2'
 }
 
-apply plugin: 'scala'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -37,7 +36,6 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-aop')
 	implementation('com.alibaba:fastjson:1.2.51')
 	implementation('mysql:mysql-connector-java:8.0.13')
-	implementation('org.scala-lang:scala-library:2.12.3')
 	
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
     jooqRuntime group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.1'
