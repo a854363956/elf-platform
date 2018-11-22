@@ -1,0 +1,17 @@
+logging:
+  level:
+    org.springframework: ERROR
+    org.jooq: ERROR
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/elf?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: elf
+    password: elf
+    
+elf-platform:
+  workerId: 0
+  dataCenterId: 0
