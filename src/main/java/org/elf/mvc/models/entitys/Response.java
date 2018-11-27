@@ -7,16 +7,16 @@ import org.elf.mvc.error.ElfRunException;
 
 public class Response implements Serializable{
 	private static final long serialVersionUID = 7742743279369000017L;
-	private int status;
+	private long status;
 	private Object   data;
 	private String msg;
 	
 	protected Response() {
 	}
-	public int getStatus() {
+	public long getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(long status) {
 		this.status = status;
 	}
 	public Object getData() {

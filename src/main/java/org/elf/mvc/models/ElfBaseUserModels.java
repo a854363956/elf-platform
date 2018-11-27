@@ -11,11 +11,12 @@ import org.elf.db.tables.pojos.ElfBaseRole;
 import org.elf.db.tables.pojos.ElfBaseSession;
 import org.elf.db.tables.pojos.ElfBaseUser;
 import org.elf.mvc.error.ElfRunException;
+import org.elf.mvc.models.utils.City;
 import org.elf.mvc.models.utils.SnowflakeIdGenerator;
 import org.elf.mvc.models.utils.StringUtils;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Service;
  * @author zhangj
  * @email zhangjin0908@hotmail.com
  */
-@Service
+@Component
 public class ElfBaseUserModels {
 	@Autowired
 	private DSLContext dsl;
@@ -44,16 +45,16 @@ public class ElfBaseUserModels {
 		var ebu = queryUser(userName);
 		if (ebu == null) {
 			// 表示当前人员名称输入错误，预占用-> 人员名称
-			throw new ElfRunException(1000, userName);
+			throw new ElfRunException(City.CHINA_CN.getValue(),1000, userName);
 		}
 		var ebr = queryRole(ebu.getRoleId());
 		if (ebr == null) {
 			// 表示当前人员没有维护角色信息, 预占用->人员名称
-			new ElfRunException(1001, userName);
+			new ElfRunException(City.CHINA_CN.getValue(),1001, userName);
 		}
 		if (!ebu.getPassword().equals(password)) {
 			// 如果账户的密码不正确则抛出密码不正确
-			throw new ElfRunException(1002, userName);
+			throw new ElfRunException(City.CHINA_CN.getValue(),1002, userName);
 		}
 
 		var ebs = querySession(ebu.getId(), equipmentId);
@@ -61,7 +62,7 @@ public class ElfBaseUserModels {
 			// 如果用户未登入,那么就创建登入数据
 			var ebeg = queryEquipmentGroup(ebu.getRoleId(), equipmentId);
 			if (ebeg == null) {
-				throw new ElfRunException(1003, userName);
+				throw new ElfRunException(City.CHINA_CN.getValue(),1003, userName);
 			}  
 			var elfSession = new ElfBaseSession(sig.nextId(), // 随机ID
 					StringUtils.get64UUID(), // 64位的会话ID防止被暴力破解
