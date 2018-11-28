@@ -12,10 +12,13 @@ import org.elf.mvc.error.ElfRunException;
 import org.elf.mvc.models.ElfBaseUserModels;
 import org.elf.mvc.models.entitys.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
-@Service
+import com.google.common.collect.ImmutableBiMap;
+
 @Path("/api/user")
+@Controller
 @Produces(MediaType.APPLICATION_JSON)
 public class ElfBaseUserController {
 	@Autowired
@@ -24,10 +27,10 @@ public class ElfBaseUserController {
 	@POST
 	@Path("/login")
 	public Response login(
-			@FormParam("userName") String userName, 
+			@FormParam("loginName") String loginName, 
 			@FormParam("password") String password,
 			@FormParam("equipmentId") long equipmentId
 	) throws NoSuchAlgorithmException, ElfRunException {
-		return Response.getSuccess(null, ebum.login(userName, password, equipmentId));
+		return Response.getSuccess(null,ImmutableBiMap.of("sessionCode",ebum.login(loginName, password, equipmentId)));
 	}
 }

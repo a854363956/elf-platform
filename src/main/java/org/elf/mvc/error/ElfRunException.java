@@ -13,7 +13,7 @@ public class ElfRunException extends Exception {
 	private static final long serialVersionUID = 3595687743301098696L;
 	private Object data;
 	private long status;
-	public ElfRunException(int country,long code,Object data,String...strings) {
+	public ElfRunException(Object data,int country,long code,String...strings) {
 		super(internationalization(country,code,strings));
 		this.data = data;
 		this.status = code;
@@ -26,7 +26,7 @@ public class ElfRunException extends Exception {
 		super(internationalization(country,code));
 		this.status = code;
 	}
-	public ElfRunException(int country,long code,Object data) {
+	public ElfRunException(Object data,int country,long code) {
 		super(internationalization(country,code));
 		this.data = data;
 		this.status = code;

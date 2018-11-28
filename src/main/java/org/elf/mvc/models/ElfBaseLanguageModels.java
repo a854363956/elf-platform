@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class ElfBaseLanguageModels {
 	@Autowired
 	private DSLContext dsl;
+	private final String notFound = "404 not found language country=%s key=%s ";
 	//@Autowired
 	//private SnowflakeIdGenerator sig;
 	
@@ -34,7 +35,7 @@ public class ElfBaseLanguageModels {
 	public String getMsg(int country, long key, String... strings) {
 		var data = getMsgRecord(country,key);
 		if (null == data) {
-			return null;
+			return String.format(notFound, country,key);
 		} else {
 			return String.format(data.get(Tables.ELF_BASE_LANGUAGE.MSG), (Object[])strings);
 		}
@@ -48,7 +49,7 @@ public class ElfBaseLanguageModels {
 	public String getMsg(int country, long key) {
 		var data = getMsgRecord(country,key);
 		if (null == data) {
-			return null;
+			return String.format(notFound, country,key);
 		} else {
 			return data.get(Tables.ELF_BASE_LANGUAGE.MSG);
 		}

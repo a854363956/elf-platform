@@ -12,3 +12,13 @@ INSERT INTO `elf`.`elf_base_equipment` (`id`, `equipment_name`, `mechanism_id`) 
 
 -- 添加设备与角色关联表
 INSERT INTO `elf`.`elf_base_equipment_group` (`id`, `role_id`, `equipment_id`, `invalid`) VALUES ('0', '0', '0', '0');
+
+
+
+
+-- 添加返回给前台的错误方言信息
+
+INSERT INTO `elf`.`elf_base_language` (`id`, `country`, `key`, `msg`) VALUES ('0', '86', '1000', '无当前人员[ %s ]信息.');
+INSERT INTO `elf`.`elf_base_language` (`id`, `country`, `key`, `msg`) VALUES ('1', '86', '1001', '当前人员[ %s ]未维护角色信息.');
+INSERT INTO `elf`.`elf_base_language` (`id`, `country`, `key`, `msg`) VALUES ('2', '86', '1002', '用户[ %s ]输入的密码不正确.');
+INSERT INTO `elf`.`elf_base_language` (`id`, `country`, `key`, `msg`) VALUES ('3', '86', '1003', '用户[ %s ]无设备登入权限.');

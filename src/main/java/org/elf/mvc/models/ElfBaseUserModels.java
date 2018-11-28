@@ -1,5 +1,6 @@
 package org.elf.mvc.models;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -40,8 +41,9 @@ public class ElfBaseUserModels {
 	 * @param equipmentId 设备的id
 	 * @return
 	 * @throws ElfRunException 
+	 * @throws NoSuchAlgorithmException 
 	 */
-	public ElfBaseSession login(String userName, String password, long equipmentId) throws ElfRunException {
+	public ElfBaseSession login(String userName, String password, long equipmentId) throws ElfRunException, NoSuchAlgorithmException {
 		var ebu = queryUser(userName);
 		if (ebu == null) {
 			// 表示当前人员名称输入错误，预占用-> 人员名称
@@ -52,8 +54,8 @@ public class ElfBaseUserModels {
 			// 表示当前人员没有维护角色信息, 预占用->人员名称
 			new ElfRunException(City.CHINA_CN.getValue(),1001, userName);
 		}
-		if (!ebu.getPassword().equals(password)) {
-			// 如果账户的密码不正确则抛出密码不正确
+		if (!ebu.getPassword().equals(StringUtils.md5(password))) {
+			// 如果账户的密码不正确则抛出密码不正确 预占用->人员名称
 			throw new ElfRunException(City.CHINA_CN.getValue(),1002, userName);
 		}
 
@@ -77,7 +79,7 @@ public class ElfBaseUserModels {
 			// 如果当前用户登入了，那么只需要更新他的最后时间
 			dsl.update(Tables.ELF_BASE_SESSION)
 					.set(Tables.ELF_BASE_SESSION.LAST_DATE, new Timestamp(new Date().getTime()))
-					.where(Tables.ELF_BASE_SESSION.ID.eq(ebu.getId()));
+					.where(Tables.ELF_BASE_SESSION.ID.eq(ebs.getId())).execute();
 			return ebs;
 		}
 	}
