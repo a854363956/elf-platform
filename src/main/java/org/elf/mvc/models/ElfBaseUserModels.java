@@ -179,4 +179,16 @@ public class ElfBaseUserModels {
 			return result.into(ElfBaseMechanismGroup.class);
 		}
 	}
+	public ElfBaseSession queryUserBySession(String sessionCode,long equipment_id) {
+		var data = dsl.select()
+				.from(Tables.ELF_BASE_SESSION)
+				.where(Tables.ELF_BASE_SESSION.SESSION_CODE.eq(sessionCode))
+				.and(Tables.ELF_BASE_SESSION.EQUIPMENT_ID.eq(equipment_id))
+				.fetchAny();
+		if(data == null) {
+			return null;
+		}else {
+			return data.into(ElfBaseSession.class);
+		}
+	}
 }

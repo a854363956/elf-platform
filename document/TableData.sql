@@ -1,6 +1,9 @@
 -- 创建所属机构
 INSERT INTO `elf`.`elf_base_mechanism` (`id`, `mechanism_code`, `mechanism_name`, `invalid`, `effective_date`) VALUES ('0', '0', '管理员机构', '0', '2020-11-12');
 
+-- 添加所属机构的映射关系
+INSERT INTO `elf`.`elf_base_mechanism_group` (`id`, `mechanism_id`, `user_id`) VALUES ('0', '0', '0');
+
 -- 创建角色
 INSERT INTO `elf`.`elf_base_role` (`id`, `role_name`, `mechanism_id`, `create_date`) VALUES ('0', '系统维护角色', '0', '2018-11-21');
 

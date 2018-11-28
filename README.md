@@ -31,4 +31,25 @@ HEAD:
 |-----      |------   |----- 
 |sessionCode|string   |用户登入凭证      
 
-> 当用户调用/api/user/login 然后返回sessionCode用户登入凭证,来进行登入
+> 当用户调用/api/user/login 然后返回sessionCode用户登入凭证,来进行下一次的API请求   
+
+### 获取用户拥有的机构信息 POST: /api/user/getMechanism
+
+请求字段
+
+|字段名称        |字段类型  | 备注
+|----------  |-------  |------
+|sessionCode |string   |当前用户的sessionCode
+|equipmentId |long     |设备类型
+
+返回字段 
+
+|字段名称          |字段类型  |备注
+|--------     |------   |------ 
+|id           |long     |机构唯一ID
+|mechanismCode|long     |机构编号
+|mechanismName|string   |机构名称
+|invalid      |long     |是否失效
+|effectiveDate|long     |有效时间
+
+> PS: 此结构是一个数组结构,字段是数组里面的字段
