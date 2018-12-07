@@ -18,6 +18,8 @@ import org.elf.db.tables.ElfBaseMechanismGroup;
 import org.elf.db.tables.ElfBaseRole;
 import org.elf.db.tables.ElfBaseSession;
 import org.elf.db.tables.ElfBaseUser;
+import org.elf.db.tables.ElfMenuData;
+import org.elf.db.tables.ElfMenuDataMapping;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
@@ -36,7 +38,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Elf extends SchemaImpl {
 
-    private static final long serialVersionUID = 1340156043;
+    private static final long serialVersionUID = -1585043873;
 
     /**
      * The reference instance of <code>elf</code>
@@ -84,6 +86,16 @@ public class Elf extends SchemaImpl {
     public final ElfBaseUser ELF_BASE_USER = org.elf.db.tables.ElfBaseUser.ELF_BASE_USER;
 
     /**
+     * 基础的菜单信息维护
+     */
+    public final ElfMenuData ELF_MENU_DATA = org.elf.db.tables.ElfMenuData.ELF_MENU_DATA;
+
+    /**
+     * 菜单权限映射表
+     */
+    public final ElfMenuDataMapping ELF_MENU_DATA_MAPPING = org.elf.db.tables.ElfMenuDataMapping.ELF_MENU_DATA_MAPPING;
+
+    /**
      * No further instances allowed
      */
     private Elf() {
@@ -115,6 +127,8 @@ public class Elf extends SchemaImpl {
             ElfBaseMechanismGroup.ELF_BASE_MECHANISM_GROUP,
             ElfBaseRole.ELF_BASE_ROLE,
             ElfBaseSession.ELF_BASE_SESSION,
-            ElfBaseUser.ELF_BASE_USER);
+            ElfBaseUser.ELF_BASE_USER,
+            ElfMenuData.ELF_MENU_DATA,
+            ElfMenuDataMapping.ELF_MENU_DATA_MAPPING);
     }
 }

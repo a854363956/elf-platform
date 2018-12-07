@@ -1,6 +1,5 @@
 package org.elf.mvc.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.elf.db.Tables;
@@ -15,7 +14,7 @@ public class ElfBaseMechanismModels {
 	private DSLContext dsl;
 	
 	/**
-	 * 根据当前人员Id查询当前人员Id可以访问的机构
+	 *   根据当前人员Id查询当前人员Id可以访问的机构
 	 * @param userId 当前用户id
 	 * @return
 	 */

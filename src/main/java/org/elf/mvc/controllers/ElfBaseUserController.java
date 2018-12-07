@@ -27,22 +27,56 @@ public class ElfBaseUserController {
 	@Autowired
 	ElfBaseMechanismModels ebmm;
 	
+	/**
+	 *   登入系统
+	 * @param loginName 登入名称
+	 * @param password  用户密码
+	 * @param equipmentId  设备ID
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 * @throws ElfRunException
+	 */
 	@POST
 	@Path("/login")
 	public Response login(
 			@FormParam("loginName") String loginName, 
 			@FormParam("password") String password,
-			@FormParam("equipmentId") long equipmentId
+			@FormParam("equipmentId") Long equipmentId
 	) throws NoSuchAlgorithmException, ElfRunException {
 		return Response.getSuccess(null,ImmutableBiMap.of("sessionCode",ebum.login(loginName, password, equipmentId)));
 	}
 	
+	/**
+	 *   获取当前人员可以访问的机构信息
+	 * @param sessionCode 当前的会话ID
+	 * @param equipmentId 当前的设备类型
+	 * @return
+	 */
 	@POST
 	@Path("/getMechanism")
 	public Response getMechanism(
-			 @FormParam("sessionCode") String sessionCode,
-			 @FormParam("equipmentId") long equipmentId
+			 @FormParam("sessionCode") String sessionCode
 			) {
-	 	return Response.getSuccess(null,ebmm.getMechanismGroup(ebum.queryUserBySession(sessionCode,equipmentId).getUserId()));
+	 	return Response.getSuccess(null,ebmm.getMechanismGroup(ebum.queryUserBySession(sessionCode).getUserId()));
+	}
+	
+	/**
+	 * 更新当前用户的密码
+	 * @param sessionCode 当前的会话ID
+	 * @param password    当前用户的密码
+	 * @param newPassword 要更新的新密码
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws NoSuchAlgorithmException
+	 * @throws ElfRunException
+	 */
+	@POST
+	@Path("/updatePassword")
+	public Response updatePassword(
+			@FormParam("sessionCode") String sessionCode,
+			@FormParam("password") String password,
+			@FormParam("newPassword") String newPassword
+			) throws IllegalArgumentException, NoSuchAlgorithmException, ElfRunException {
+		return Response.getSuccess(null, ImmutableBiMap.of("affectedLine",ebum.updatePassword(sessionCode, password, newPassword)));
 	}
 }

@@ -19,9 +19,8 @@ import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
 /**
- * 用来管理人员操作一些模块类
+ * 用来管理人员操作一些模块类 PS: 所有的数据必须通过SessionCode来进行判断,比如当前登入人等等...绝对不能通过前端传入的人员来进行判断
  * 
  * @author zhangj
  * @email zhangjin0908@hotmail.com
@@ -37,26 +36,27 @@ public class ElfBaseUserModels {
 	 * 用户点击登入按钮登入系统
 	 * 
 	 * @param userName    用户名
-	 * @param password    md5加密的密码
+	 * @param password    密码
 	 * @param equipmentId 设备的id
 	 * @return
-	 * @throws ElfRunException 
-	 * @throws NoSuchAlgorithmException 
+	 * @throws ElfRunException
+	 * @throws NoSuchAlgorithmException
 	 */
-	public ElfBaseSession login(String userName, String password, long equipmentId) throws ElfRunException, NoSuchAlgorithmException {
+	public ElfBaseSession login(String userName, String password, long equipmentId)
+			throws ElfRunException, NoSuchAlgorithmException {
 		var ebu = queryUser(userName);
 		if (ebu == null) {
 			// 表示当前人员名称输入错误，预占用-> 人员名称
-			throw new ElfRunException(City.CHINA_CN.getValue(),1000, userName);
+			throw new ElfRunException(City.CHINA_CN.getValue(), 1000, userName);
 		}
 		var ebr = queryRole(ebu.getRoleId());
 		if (ebr == null) {
 			// 表示当前人员没有维护角色信息, 预占用->人员名称
-			new ElfRunException(City.CHINA_CN.getValue(),1001, userName);
+			new ElfRunException(City.CHINA_CN.getValue(), 1001, userName);
 		}
 		if (!ebu.getPassword().equals(StringUtils.md5(password))) {
 			// 如果账户的密码不正确则抛出密码不正确 预占用->人员名称
-			throw new ElfRunException(City.CHINA_CN.getValue(),1002, userName);
+			throw new ElfRunException(City.CHINA_CN.getValue(), 1002, userName);
 		}
 
 		var ebs = querySession(ebu.getId(), equipmentId);
@@ -64,8 +64,8 @@ public class ElfBaseUserModels {
 			// 如果用户未登入,那么就创建登入数据
 			var ebeg = queryEquipmentGroup(ebu.getRoleId(), equipmentId);
 			if (ebeg == null) {
-				throw new ElfRunException(City.CHINA_CN.getValue(),1003, userName);
-			}  
+				throw new ElfRunException(City.CHINA_CN.getValue(), 1003, userName);
+			}
 			var elfSession = new ElfBaseSession(sig.nextId(), // 随机ID
 					StringUtils.get64UUID(), // 64位的会话ID防止被暴力破解
 					ebu.getId(), // 人员ID
@@ -179,16 +179,66 @@ public class ElfBaseUserModels {
 			return result.into(ElfBaseMechanismGroup.class);
 		}
 	}
-	public ElfBaseSession queryUserBySession(String sessionCode,long equipment_id) {
-		var data = dsl.select()
-				.from(Tables.ELF_BASE_SESSION)
-				.where(Tables.ELF_BASE_SESSION.SESSION_CODE.eq(sessionCode))
-				.and(Tables.ELF_BASE_SESSION.EQUIPMENT_ID.eq(equipment_id))
-				.fetchAny();
-		if(data == null) {
+
+	/**
+	 * 根据SessionCode查询相关的session数据
+	 * 
+	 * @param sessionCode  sessionCode
+	 * @param equipment_id 设备Id
+	 * @return 返回查询到的Session数据集合
+	 */
+	public ElfBaseSession queryUserBySession(String sessionCode) {
+		var data = dsl.select().from(Tables.ELF_BASE_SESSION)
+				.where(Tables.ELF_BASE_SESSION.SESSION_CODE.eq(sessionCode)).fetchAny();
+		if (data == null) {
 			return null;
-		}else {
+		} else {
 			return data.into(ElfBaseSession.class);
+		}
+	}
+
+	/**
+	 * 通过SessionCode获取当前语言信息
+	 * 
+	 * @param sessionCode
+	 * @return
+	 */
+	public Long getCurrentLanguage(String sessionCode) {
+		return getCurrentUser(sessionCode).getLanguage();
+	}
+
+	/**
+	 * 通过sessionCode获取当前人员信息
+	 * 
+	 * @param sessionCode
+	 * @return
+	 */
+	public ElfBaseUser getCurrentUser(String sessionCode) {
+		var elfBaseSession = queryUserBySession(sessionCode);
+		return dsl.select().from(Tables.ELF_BASE_USER).where(Tables.ELF_BASE_USER.ID.eq(elfBaseSession.getUserId()))
+				.fetchAny().into(ElfBaseUser.class);
+	}
+
+	/**
+	 * 根据当前用户名和密码来进行修改密码
+	 * 
+	 * @param sessionCode 当前用户登入的sessionCode
+	 * @param password    当前用户登入的密码
+	 * @param newPassword 要修改的新密码
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws NoSuchAlgorithmException
+	 * @throws ElfRunException
+	 */
+	public int updatePassword(String sessionCode, String password, String newPassword)
+			throws IllegalArgumentException, NoSuchAlgorithmException, ElfRunException {
+		var elfBaseUser = getCurrentUser(sessionCode);
+		// 如果密码输入正确，则更新密码为输入的新密码
+		if (elfBaseUser.getPassword().equals(StringUtils.md5(password))) {
+			return dsl.update(Tables.ELF_BASE_USER).set(Tables.ELF_BASE_USER.PASSWORD, StringUtils.md5(newPassword))
+					.execute();
+		} else {
+			throw new ElfRunException(getCurrentLanguage(sessionCode).intValue(), 1004);
 		}
 	}
 }

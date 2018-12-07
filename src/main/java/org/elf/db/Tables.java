@@ -14,6 +14,8 @@ import org.elf.db.tables.ElfBaseMechanismGroup;
 import org.elf.db.tables.ElfBaseRole;
 import org.elf.db.tables.ElfBaseSession;
 import org.elf.db.tables.ElfBaseUser;
+import org.elf.db.tables.ElfMenuData;
+import org.elf.db.tables.ElfMenuDataMapping;
 
 
 /**
@@ -68,4 +70,14 @@ public class Tables {
      * 用来维护用户信息
      */
     public static final ElfBaseUser ELF_BASE_USER = org.elf.db.tables.ElfBaseUser.ELF_BASE_USER;
+
+    /**
+     * 基础的菜单信息维护
+     */
+    public static final ElfMenuData ELF_MENU_DATA = org.elf.db.tables.ElfMenuData.ELF_MENU_DATA;
+
+    /**
+     * 菜单权限映射表
+     */
+    public static final ElfMenuDataMapping ELF_MENU_DATA_MAPPING = org.elf.db.tables.ElfMenuDataMapping.ELF_MENU_DATA_MAPPING;
 }

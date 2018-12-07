@@ -14,6 +14,8 @@ import org.elf.db.tables.ElfBaseMechanismGroup;
 import org.elf.db.tables.ElfBaseRole;
 import org.elf.db.tables.ElfBaseSession;
 import org.elf.db.tables.ElfBaseUser;
+import org.elf.db.tables.ElfMenuData;
+import org.elf.db.tables.ElfMenuDataMapping;
 import org.elf.db.tables.records.ElfBaseEquipmentGroupRecord;
 import org.elf.db.tables.records.ElfBaseEquipmentRecord;
 import org.elf.db.tables.records.ElfBaseLanguageRecord;
@@ -22,6 +24,8 @@ import org.elf.db.tables.records.ElfBaseMechanismRecord;
 import org.elf.db.tables.records.ElfBaseRoleRecord;
 import org.elf.db.tables.records.ElfBaseSessionRecord;
 import org.elf.db.tables.records.ElfBaseUserRecord;
+import org.elf.db.tables.records.ElfMenuDataMappingRecord;
+import org.elf.db.tables.records.ElfMenuDataRecord;
 import org.jooq.ForeignKey;
 import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
@@ -59,6 +63,8 @@ public class Keys {
     public static final UniqueKey<ElfBaseSessionRecord> KEY_ELF_BASE_SESSION_PRIMARY = UniqueKeys0.KEY_ELF_BASE_SESSION_PRIMARY;
     public static final UniqueKey<ElfBaseUserRecord> KEY_ELF_BASE_USER_PRIMARY = UniqueKeys0.KEY_ELF_BASE_USER_PRIMARY;
     public static final UniqueKey<ElfBaseUserRecord> KEY_ELF_BASE_USER_LOGIN_NAME_UNIQUE = UniqueKeys0.KEY_ELF_BASE_USER_LOGIN_NAME_UNIQUE;
+    public static final UniqueKey<ElfMenuDataRecord> KEY_ELF_MENU_DATA_PRIMARY = UniqueKeys0.KEY_ELF_MENU_DATA_PRIMARY;
+    public static final UniqueKey<ElfMenuDataMappingRecord> KEY_ELF_MENU_DATA_MAPPING_PRIMARY = UniqueKeys0.KEY_ELF_MENU_DATA_MAPPING_PRIMARY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -72,6 +78,7 @@ public class Keys {
     public static final ForeignKey<ElfBaseSessionRecord, ElfBaseUserRecord> SESSION_TO_USER = ForeignKeys0.SESSION_TO_USER;
     public static final ForeignKey<ElfBaseSessionRecord, ElfBaseEquipmentRecord> SESSION_TO_EQUIPMENT = ForeignKeys0.SESSION_TO_EQUIPMENT;
     public static final ForeignKey<ElfBaseUserRecord, ElfBaseRoleRecord> USER_TO_ROLE = ForeignKeys0.USER_TO_ROLE;
+    public static final ForeignKey<ElfMenuDataMappingRecord, ElfMenuDataRecord> FKEY_MENU_DATA_MAPPING_TO_MENU_DATA = ForeignKeys0.FKEY_MENU_DATA_MAPPING_TO_MENU_DATA;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -87,6 +94,8 @@ public class Keys {
         public static final UniqueKey<ElfBaseSessionRecord> KEY_ELF_BASE_SESSION_PRIMARY = Internal.createUniqueKey(ElfBaseSession.ELF_BASE_SESSION, "KEY_elf_base_session_PRIMARY", ElfBaseSession.ELF_BASE_SESSION.ID);
         public static final UniqueKey<ElfBaseUserRecord> KEY_ELF_BASE_USER_PRIMARY = Internal.createUniqueKey(ElfBaseUser.ELF_BASE_USER, "KEY_elf_base_user_PRIMARY", ElfBaseUser.ELF_BASE_USER.ID);
         public static final UniqueKey<ElfBaseUserRecord> KEY_ELF_BASE_USER_LOGIN_NAME_UNIQUE = Internal.createUniqueKey(ElfBaseUser.ELF_BASE_USER, "KEY_elf_base_user_login_name_UNIQUE", ElfBaseUser.ELF_BASE_USER.LOGIN_NAME);
+        public static final UniqueKey<ElfMenuDataRecord> KEY_ELF_MENU_DATA_PRIMARY = Internal.createUniqueKey(ElfMenuData.ELF_MENU_DATA, "KEY_elf_menu_data_PRIMARY", ElfMenuData.ELF_MENU_DATA.ID);
+        public static final UniqueKey<ElfMenuDataMappingRecord> KEY_ELF_MENU_DATA_MAPPING_PRIMARY = Internal.createUniqueKey(ElfMenuDataMapping.ELF_MENU_DATA_MAPPING, "KEY_elf_menu_data_mapping_PRIMARY", ElfMenuDataMapping.ELF_MENU_DATA_MAPPING.ID);
     }
 
     private static class ForeignKeys0 {
@@ -98,5 +107,6 @@ public class Keys {
         public static final ForeignKey<ElfBaseSessionRecord, ElfBaseUserRecord> SESSION_TO_USER = Internal.createForeignKey(org.elf.db.Keys.KEY_ELF_BASE_USER_PRIMARY, ElfBaseSession.ELF_BASE_SESSION, "session_to_user", ElfBaseSession.ELF_BASE_SESSION.USER_ID);
         public static final ForeignKey<ElfBaseSessionRecord, ElfBaseEquipmentRecord> SESSION_TO_EQUIPMENT = Internal.createForeignKey(org.elf.db.Keys.KEY_ELF_BASE_EQUIPMENT_PRIMARY, ElfBaseSession.ELF_BASE_SESSION, "session_to_equipment", ElfBaseSession.ELF_BASE_SESSION.EQUIPMENT_ID);
         public static final ForeignKey<ElfBaseUserRecord, ElfBaseRoleRecord> USER_TO_ROLE = Internal.createForeignKey(org.elf.db.Keys.KEY_ELF_BASE_ROLE_PRIMARY, ElfBaseUser.ELF_BASE_USER, "user_to_role", ElfBaseUser.ELF_BASE_USER.ROLE_ID);
+        public static final ForeignKey<ElfMenuDataMappingRecord, ElfMenuDataRecord> FKEY_MENU_DATA_MAPPING_TO_MENU_DATA = Internal.createForeignKey(org.elf.db.Keys.KEY_ELF_MENU_DATA_PRIMARY, ElfMenuDataMapping.ELF_MENU_DATA_MAPPING, "FKEY_MENU_DATA_MAPPING_TO_MENU_DATA", ElfMenuDataMapping.ELF_MENU_DATA_MAPPING.MENU_ID);
     }
 }

@@ -1,19 +1,11 @@
 # elf-platform
 
-### 所有接口的统一响应包装  
-
-|字段名称    |字段类型 |备注
-|------    |----    |-----
-|status    |long    |当前状态,如果状态等于200那么表示此请求服务正常处理
-|data      |any     |任意类型,也就是返回给客户端包装的数据,如果是一个实体那么他将是一个JSON对象
-|msg       |string  |返回的消息类型
-
-> 注明，所有的接口都是安装此方法进行返回,如无特殊要求,默认所有的返回数据都放在data里面
+## 关于用户操作的AIP接口 
 
 ### 登入系统 POST: /api/user/login  
 HEAD:   
 
-|字段名称        |字段值
+|字段名称          |字段值
 |--------    |--------
 |Content-Type|x-www-form-urlencoded
 
@@ -37,14 +29,14 @@ HEAD:
 
 请求字段
 
-|字段名称        |字段类型  | 备注
+|字段名称          |字段类型     |备注
 |----------  |-------  |------
 |sessionCode |string   |当前用户的sessionCode
 |equipmentId |long     |设备类型
 
 返回字段 
 
-|字段名称          |字段类型  |备注
+|字段名称           |字段类型    |备注
 |--------     |------   |------ 
 |id           |long     |机构唯一ID
 |mechanismCode|long     |机构编号
@@ -52,4 +44,22 @@ HEAD:
 |invalid      |long     |是否失效
 |effectiveDate|long     |有效时间
 
-> PS: 此结构是一个数组结构,字段是数组里面的字段
+> PS: 此结构是一个数组结构,字段是数组里面的字段   
+
+### 修改用户密码 POST: /api/user/updatePassword  
+
+请求字段
+
+|字段名称        |字段类型       |备注
+|--------    |------      |------- 
+|sessionCode |string      |用户当前登入的sessionCode
+|password    |string      |用户当前登入的密码
+|newPassword |string      |用户要更新的新密码   
+
+返回字段  
+
+|字段名称       |字段类型        |备注
+|--------    |------      |------------
+|affectedLine|int         |受影响的行数,如果为0表示没有更新成功,如果为1表示更新成功  
+
+> 调用此方法用来更新用户的密码

@@ -14,6 +14,8 @@ import org.elf.db.tables.ElfBaseMechanismGroup;
 import org.elf.db.tables.ElfBaseRole;
 import org.elf.db.tables.ElfBaseSession;
 import org.elf.db.tables.ElfBaseUser;
+import org.elf.db.tables.ElfMenuData;
+import org.elf.db.tables.ElfMenuDataMapping;
 import org.jooq.Index;
 import org.jooq.OrderField;
 import org.jooq.impl.Internal;
@@ -53,6 +55,9 @@ public class Indexes {
     public static final Index ELF_BASE_USER_LOGIN_NAME_UNIQUE = Indexes0.ELF_BASE_USER_LOGIN_NAME_UNIQUE;
     public static final Index ELF_BASE_USER_PRIMARY = Indexes0.ELF_BASE_USER_PRIMARY;
     public static final Index ELF_BASE_USER_USER_TO_ROLE_IDX = Indexes0.ELF_BASE_USER_USER_TO_ROLE_IDX;
+    public static final Index ELF_MENU_DATA_PRIMARY = Indexes0.ELF_MENU_DATA_PRIMARY;
+    public static final Index ELF_MENU_DATA_MAPPING_FKEY_MENU_DATA_MAPPING_TO_MENU_DATA_IDX = Indexes0.ELF_MENU_DATA_MAPPING_FKEY_MENU_DATA_MAPPING_TO_MENU_DATA_IDX;
+    public static final Index ELF_MENU_DATA_MAPPING_PRIMARY = Indexes0.ELF_MENU_DATA_MAPPING_PRIMARY;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -76,5 +81,8 @@ public class Indexes {
         public static Index ELF_BASE_USER_LOGIN_NAME_UNIQUE = Internal.createIndex("login_name_UNIQUE", ElfBaseUser.ELF_BASE_USER, new OrderField[] { ElfBaseUser.ELF_BASE_USER.LOGIN_NAME }, true);
         public static Index ELF_BASE_USER_PRIMARY = Internal.createIndex("PRIMARY", ElfBaseUser.ELF_BASE_USER, new OrderField[] { ElfBaseUser.ELF_BASE_USER.ID }, true);
         public static Index ELF_BASE_USER_USER_TO_ROLE_IDX = Internal.createIndex("user_to_role_idx", ElfBaseUser.ELF_BASE_USER, new OrderField[] { ElfBaseUser.ELF_BASE_USER.ROLE_ID }, false);
+        public static Index ELF_MENU_DATA_PRIMARY = Internal.createIndex("PRIMARY", ElfMenuData.ELF_MENU_DATA, new OrderField[] { ElfMenuData.ELF_MENU_DATA.ID }, true);
+        public static Index ELF_MENU_DATA_MAPPING_FKEY_MENU_DATA_MAPPING_TO_MENU_DATA_IDX = Internal.createIndex("FKEY_MENU_DATA_MAPPING_TO_MENU_DATA_idx", ElfMenuDataMapping.ELF_MENU_DATA_MAPPING, new OrderField[] { ElfMenuDataMapping.ELF_MENU_DATA_MAPPING.MENU_ID }, false);
+        public static Index ELF_MENU_DATA_MAPPING_PRIMARY = Internal.createIndex("PRIMARY", ElfMenuDataMapping.ELF_MENU_DATA_MAPPING, new OrderField[] { ElfMenuDataMapping.ELF_MENU_DATA_MAPPING.ID }, true);
     }
 }

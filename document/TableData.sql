@@ -25,3 +25,4 @@ INSERT INTO `elf`.`elf_base_language` (`id`, `country`, `key`, `msg`) VALUES ('0
 INSERT INTO `elf`.`elf_base_language` (`id`, `country`, `key`, `msg`) VALUES ('1', '86', '1001', '当前人员[ %s ]未维护角色信息.');
 INSERT INTO `elf`.`elf_base_language` (`id`, `country`, `key`, `msg`) VALUES ('2', '86', '1002', '用户[ %s ]输入的密码不正确.');
 INSERT INTO `elf`.`elf_base_language` (`id`, `country`, `key`, `msg`) VALUES ('3', '86', '1003', '用户[ %s ]无设备登入权限.');
+INSERT INTO `elf`.`elf_base_language` (`id`, `country`, `key`, `msg`) VALUES ('4', '86', '1004', '输入的用户密码不正确.');
