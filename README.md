@@ -1,8 +1,8 @@
 # elf-platform
 
-## 关于用户操作的AIP接口 
+### 关于用户操作的AIP接口 
 
-### 登入系统 POST: /api/user/login  
+#### 1. 登入系统 POST: /api/user/login  
 HEAD:   
 
 |字段名称          |字段值
@@ -25,7 +25,7 @@ HEAD:
 
 > 当用户调用/api/user/login 然后返回sessionCode用户登入凭证,来进行下一次的API请求   
 
-### 获取用户拥有的机构信息 POST: /api/user/getMechanism
+#### 2. 获取用户拥有的机构信息 POST: /api/user/getMechanism
 
 请求字段
 
@@ -46,7 +46,7 @@ HEAD:
 
 > PS: 此结构是一个数组结构,字段是数组里面的字段   
 
-### 修改用户密码 POST: /api/user/updatePassword  
+#### 3. 修改用户密码 POST: /api/user/updatePassword  
 
 请求字段
 
